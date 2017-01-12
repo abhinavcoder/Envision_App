@@ -17,6 +17,10 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "org.apache.cordova.speech.speechrecognition": {
+            "MICROPHONE_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
         }
     },
     "dependent_plugins": {
