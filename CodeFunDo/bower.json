@@ -1,5 +1,7 @@
 {
-    "name": "CodeFunDo",
-    "dependencies": {
-    }
+  "name": "codefundo",
+  "directory": "www/lib/",
+  "dependencies": {
+    "onsenui": "^2.0.5"
+  }
 }
