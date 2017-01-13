@@ -245,3 +245,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /CodeFunDo/plugins/org.apache.cordova.speech.speechrecognition
+/CodeFunDo/plugins/cordova-plugin-camera-preview
