@@ -17,6 +17,7 @@
             "visualFeatures": "Description",
             "language": "en",
         };
+        var img_id;
 
         $('#main-button').css('height', $('#main-button').css("width"));
         document.addEventListener('deviceready', onDeviceReady, false);
@@ -44,10 +45,22 @@
                     }
 
                     document.getElementById("main-status").innerHTML = event.results[0][0].transcript;
-                    $("#question").value(event.results[0][0].transcript);
-                    $("#form").submit();
-                    $("#icontent").contents().find("body > ul > li:nth-child(1) > strong").html()
-
+                    
+                    console.log(img_id);
+                    $.post("http://vqa.daylen.com/api/upload_question", {
+                        'img_id': img_id,
+                        'question': event.results[0][0].transcript
+                    })
+                    .done(function (data) {
+                        $("#main-status").html(data['answer']);
+                        speak(data['answer']);
+                    })
+                    .fail(function (a, b, c) {
+                        alert("error");
+                        alert(a);
+                        alert(b);
+                        alert(c);
+                    });
                 }
             }
             CameraPreview.setOnPictureTakenHandler(function (result) {
@@ -55,8 +68,12 @@
                 document.getElementById('loading-buzy').style.display = 'block';
                 $.post('http://40.71.33.178/save',{data:result},
                     function (data) {
+                        r = JSON.parse(data);
+                        data = r['local'];
+                        img_id = r['img_id']
+                        console.log(JSON.stringify(r));
                         $('#loading-buzy').css('display', 'none');
-                        $("#url").value("http://40.71.33.178/" + data);
+                        $("#url").val("http://40.71.33.178/" + data);
                         $.ajax({
                             url: "https://api.projectoxford.ai/vision/v1.0/analyze?" + $.param(params),
                             beforeSend: function (xhrObj) {
@@ -107,20 +124,20 @@
             Tap to speak. Click to Snap
         </div>
         <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data" target="icontent">
-            <input id="url" type="hidden" name="url" value="http://visualqa.csail.mit.edu/vqa_image/442.jpg" />
+            <input id="url" type="hidden" name="url" value="http://40.71.33.178/static/1484393884.jpg" />
             <input type="hidden" name="random" value="56476846" />
             <input id="question" type="hidden" name="question" value="what food?" />
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" onclick="makeRequest();" />
         </form>
         
-        <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-p rogress-circular>
+        <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-progress-circular>
         <iframe name="icontent" id="icontent"></iframe>
     </ons-page>
 
     <script>
         
         function makeRequest() {
-
+            
         }
         $('#main-button').css('height', $('#main-button').css("width"));
         $("#form").bind('ajax:complete', function() {
