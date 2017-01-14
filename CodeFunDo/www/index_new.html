@@ -11,12 +11,14 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <!--<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>-->
     <script>
-        var recognition;
+        var recognition=null;
         var picture;
         var params = {
             "visualFeatures": "Description",
             "language": "en",
         };
+
+        $('#main-button').css('height', $('#main-button').css("width"));
         document.addEventListener('deviceready', onDeviceReady, false);
 
         function speak(text) {
@@ -40,7 +42,12 @@
                         CameraPreview.startCamera({ camera: "back", tapPhoto: true, previewDrag: false, toBack: false });
                         return;
                     }
+
                     document.getElementById("main-status").innerHTML = event.results[0][0].transcript;
+                    $("#question").value(event.results[0][0].transcript);
+                    $("#form").submit();
+                    $("#icontent").contents().find("body > ul > li:nth-child(1) > strong").html()
+
                 }
             }
             CameraPreview.setOnPictureTakenHandler(function (result) {
@@ -49,7 +56,7 @@
                 $.post('http://40.71.33.178/save',{data:result},
                     function (data) {
                         $('#loading-buzy').css('display', 'none');
-                        
+                        $("#url").value("http://40.71.33.178/" + data);
                         $.ajax({
                             url: "https://api.projectoxford.ai/vision/v1.0/analyze?" + $.param(params),
                             beforeSend: function (xhrObj) {
@@ -89,19 +96,24 @@
               </ons-toolbar-button>
             </div>-->
         </ons-toolbar>
-        <ons-button id="main-button">Click to Speak</ons-button>
+        <ons-button id="main-button" style="font-size:60px ">
+            <i class="fa fa-camera" aria-hidden="true"></i>
+            <span style="font-size:80px">|</span>
+            <i class="fa fa-microphone" aria-hidden="true"></i>
+
+        </ons-button>
         <div id="main-status" style="">
             Welcome to Envision. <br />
             Tap to speak. Click to Snap
         </div>
-        <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data">
-            <input type="hidden" name="url" value="http://visualqa.csail.mit.edu/vqa_image/442.jpg" />
+        <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data" target="icontent">
+            <input id="url" type="hidden" name="url" value="http://visualqa.csail.mit.edu/vqa_image/442.jpg" />
             <input type="hidden" name="random" value="56476846" />
-            <input type="hidden" name="question" value="what food?" />
+            <input id="question" type="hidden" name="question" value="what food?" />
             <input type="submit" value="Submit" />
         </form>
         
-        <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-progress-circular>
+        <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-p rogress-circular>
         <iframe name="icontent" id="icontent"></iframe>
     </ons-page>
 
@@ -110,8 +122,13 @@
         function makeRequest() {
 
         }
-        
+        $('#main-button').css('height', $('#main-button').css("width"));
+        $("#form").bind('ajax:complete', function() {
 
+                 alert("hola_senotira"); 
+
+
+        });
         (function () {
 
             document.addEventListener("hold", function () {
