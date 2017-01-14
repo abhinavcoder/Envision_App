@@ -130,16 +130,16 @@ button{
 }
 
 #main-button{
-    width: 200px;
-    height: 200px;
+    width: 75%;
+    /*height: 200px;*/
     
     display: block;
     text-align:center;
     border-radius: 100%;
     margin: auto;
-    margin-top: 35%;
+    margin-top: 30%;
 
-    padding: 90px 0px;
+    padding: 110px 0px;
 }
 
 #main-status{
