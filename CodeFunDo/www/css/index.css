@@ -129,3 +129,19 @@ button{
   margin-top:100%;
 }
 
+#main-button{
+    width: 200px;
+    height: 200px;
+    
+    display: block;
+    text-align:center;
+    border-radius: 100%;
+    margin: auto;
+    margin-top: 35%;
+
+    padding: 90px 0px;
+}
+
+#main-status{
+    margin-top: 10%;
+}

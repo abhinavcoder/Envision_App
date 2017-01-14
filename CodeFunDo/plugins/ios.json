@@ -24,6 +24,9 @@
         },
         "cordova-plugin-camera-preview": {
             "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
         }
     },
     "dependent_plugins": {

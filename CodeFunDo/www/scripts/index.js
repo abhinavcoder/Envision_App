@@ -35,7 +35,7 @@ var app = {
     },
 
     startCameraAnotherPos: function () {
-        CameraPreview.startCamera({ x: 50, y: 100, width: 300, height: 300, camera: "back", tapPhoto: true, previewDrag: true, toBack: false });
+        
     },
 
     stopCamera: function () {
@@ -75,15 +75,9 @@ var app = {
         document.getElementById('colorEffectCombo').addEventListener('change', this.colorEffectChanged, false);
         //window.addEventListener('orientationchange', this.onStopCamera, false);
 
-        CameraPreview.setOnPictureTakenHandler(function (result) {
-            console.log(result);
-            document.getElementById('originalPicture').src = "data:image/jpeg;base64," + result; //originalPicturePath;
-            document.getElementById('previewPicture').src = result[1]; //previewPicturePath;
-        });
     }
 };
 
 document.addEventListener('deviceready', function () {
-    app.init();
-    console.log("Readyyyyyyyyyyyyyyyyy.............");
+    
 }, false);

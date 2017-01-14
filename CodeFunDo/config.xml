@@ -3,7 +3,7 @@
   <name>CodeFunDo</name>
   <description>A blank project that uses Apache Cordova to help you build an app that targets multiple mobile platforms: Android, iOS, Windows, and Windows Phone.</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Apache Cordova Team </author>
-  <content src="camera.html" />
+  <content src="index_new.html" />
   <access origin="*" />
   <vs:features />
   <preference name="SplashScreen" value="screen" />
@@ -112,4 +112,5 @@
   <plugin name="org.apache.cordova.speech.speechrecognition" version="0.1.2" />
   <plugin name="cordova-plugin-camera-preview" version="0.9.0" src="https://github.com/westonganger/cordova-plugin-camera-preview.git" />
   <preference name="Orientation" value="portrait" />
+  <plugin name="cordova-plugin-tts" version="0.2.3" src="https://github.com/vilic/cordova-plugin-tts.git" />
 </widget>

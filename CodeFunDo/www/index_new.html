@@ -1,27 +1,117 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="lib/onsenui/css/onsenui.css"/>
-    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css"/>
+    <link rel="stylesheet" href="lib/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css" />
+    <link rel="stylesheet" href="css/index.css" />
     <script src="lib/onsenui/js/onsenui.min.js"></script>
-  </head>
+    <script type="text/javascript" src="cordova.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>-->
+    <script>
+        var recognition;
+        var picture;
+        document.addEventListener('deviceready', onDeviceReady, false);
 
-  <body>
-		<ons-page>
-		  <ons-toolbar>
-		    <div class="left">
-		      <ons-back-button>Back</ons-back-button>
-		    </div>
-		    <div class="center">Title</div>
-		    <div class="right">
-		      <ons-toolbar-button>
-		        <ons-icon icon="md-menu"></ons-icon>
-		      </ons-toolbar-button>
-		    </div>
-		  </ons-toolbar>
+        function onDeviceReady() {
+            recognition = new SpeechRecognition();
+            recognition.onresult = function (event) {
+                if (event.results.length > 0) {
+                    //q.value = event.results[0][0].transcript;
+                    //q.form.submit();
+                    result = event.results[0][0].transcript.trim();
+                    if (result.toLowerCase() == "camera" || result.toLowerCase() == "open camera") {
 
-		  Some other content...
-		</ons-page>
-  </body>
+                        TTS.speak('Opening Camera', function () {
+
+                        }, function (reason) {
+                            alert(reason);
+                        });
+
+                        CameraPreview.startCamera({ camera: "back", tapPhoto: true, previewDrag: false, toBack: false });
+                        return;
+                    }
+                    document.getElementById("main-status").innerHTML = event.results[0][0].transcript;
+                }
+            }
+            CameraPreview.setOnPictureTakenHandler(function (result) {
+                picture = "data:image/jpeg;base64," + result; //originalPicturePath;
+                
+                CameraPreview.stopCamera();
+            });
+            console.log("Readyyyyyyyyyyyyyyyyy.............");
+        }
+    </script>
+</head>
+
+<body>
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <img style="height:100%;" src="images/logo.png" />
+            </div>
+            <div class="center">
+                Envision
+            </div>
+            <!--<div class="right">
+              <ons-toolbar-button>
+                <ons-icon icon="md-menu"></ons-icon>
+              </ons-toolbar-button>
+            </div>-->
+        </ons-toolbar>
+        <ons-button id="main-button">Click to Speak</ons-button>
+        <div id="main-status" style="">
+            Welcome to Envision. <br />
+            Tap to speak. Click to Snap
+        </div>
+        <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="url" value="http://visualqa.csail.mit.edu/vqa_image/442.jpg" />
+            <input type="hidden" name="random" value="56476846" />
+            <input type="hidden" name="question" value="what food?" />
+            <input type="submit" value="Submit" />
+        </form>
+        <form action="http://127.0.0.1:5000/save" id="form" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="data" value="" />
+            <input type="submit" value="Submit" />
+        </form>
+    </ons-page>
+
+    <script>
+        
+        function makeRequest() {
+
+        }
+
+        (function () {
+
+            document.addEventListener("hold", function () {
+                if (event.target.matches("#main-button")) {
+                    recognition.start();
+                }
+            });
+            document.addEventListener("release", function () {
+                if (event.target.matches("#main-button")) {
+                    recognition.stop();
+                }
+            });
+
+            document.getElementById("main-button").addEventListener("click", function (event) {
+                
+                TTS.speak('Opening Camera', function () {
+                    
+                }, function (reason) {
+                    alert(reason);
+                });
+                
+                //window.location.href = "camera.html";
+                CameraPreview.startCamera({ camera: "back", tapPhoto: true, previewDrag: false, toBack: false });
+
+            });
+
+        })();
+
+    </script>
+</body>
+
 </html>

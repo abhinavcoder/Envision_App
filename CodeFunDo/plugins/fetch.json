@@ -48,5 +48,14 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-tts": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/vilic/cordova-plugin-tts.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

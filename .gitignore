@@ -246,3 +246,6 @@ ModelManifest.xml
 .fake/
 /CodeFunDo/plugins/org.apache.cordova.speech.speechrecognition
 /CodeFunDo/plugins/cordova-plugin-camera-preview
+/CodeFunDo/plugins/cordova-plugin-tts
+WebServices/*.png
+WebServices/*.pyc
