@@ -17,7 +17,6 @@
             "visualFeatures": "Description",
             "language": "en",
         };
-
         $('#main-button').css('height', $('#main-button').css("width"));
         document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -76,6 +75,25 @@
                             alert("error");
                         });
                 });
+
+                $.ajax({
+                    url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
+                    beforeSend: function (xhrObj) {
+                        // Request headers
+                        xhrObj.setRequestHeader("Content-Type", "application/json");
+                        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "01e50a2eb00342d8bbdf1dc1744631a5");
+                    },
+                    type: "POST",
+                    // Request body
+                    data: "{'url':'" + "http://40.71.33.178/" + data + "'}",
+                })
+                .done(function (data) {
+                    speak(data['regions'][0]['lines'][0]['words'][0]['text']);
+                    $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
+                })
+                .fail(function () {
+                    alert("error");
+                });
             });
         }
     </script>
@@ -104,8 +122,8 @@
         </ons-button>
         <div id="main-status" style="">
             Welcome to Envision. <br />
-            Tap to speak. Click to Snap
         </div>
+        <div id="text-status" style="">Tap to speak. Click to Snap</div>
         <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data" target="icontent">
             <input id="url" type="hidden" name="url" value="http://visualqa.csail.mit.edu/vqa_image/442.jpg" />
             <input type="hidden" name="random" value="56476846" />
