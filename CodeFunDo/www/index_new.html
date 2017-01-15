@@ -17,11 +17,8 @@
             "visualFeatures": "Description",
             "language": "en",
         };
-<<<<<<< HEAD
-=======
-        var img_id;
 
->>>>>>> 0c10bfb0c11c36aef43790033e889a3b776df385
+        var img_id;
         $('#main-button').css('height', $('#main-button').css("width"));
         document.addEventListener('deviceready', onDeviceReady, false);
 
@@ -95,26 +92,29 @@
                         .fail(function () {
                             alert("error");
                         });
+
+                        //$.ajax({
+                        //    url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
+                        //    beforeSend: function (xhrObj) {
+                        //        // Request headers
+                        //        xhrObj.setRequestHeader("Content-Type", "application/json");
+                        //        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "01e50a2eb00342d8bbdf1dc1744631a5");
+                        //    },
+                        //    type: "POST",
+                        //    // Request body
+                        //    data: "{'url':'" + "http://40.71.33.178/" + data + "'}",
+                        //})
+                        //.done(function (data) {
+                        //    console.log("text reading complete");
+                        //    speak(data['regions'][0]['lines'][0]['words'][0]['text']);
+                        //    $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
+                        //})
+                        //.fail(function () {
+                        //    alert("error");
+                        //});
                 });
 
-                $.ajax({
-                    url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
-                    beforeSend: function (xhrObj) {
-                        // Request headers
-                        xhrObj.setRequestHeader("Content-Type", "application/json");
-                        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "01e50a2eb00342d8bbdf1dc1744631a5");
-                    },
-                    type: "POST",
-                    // Request body
-                    data: "{'url':'" + "http://40.71.33.178/" + data + "'}",
-                })
-                .done(function (data) {
-                    speak(data['regions'][0]['lines'][0]['words'][0]['text']);
-                    $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
-                })
-                .fail(function () {
-                    alert("error");
-                });
+                
             });
         }
     </script>
@@ -143,17 +143,18 @@
         </ons-button>
         <div id="main-status" style="">
             Welcome to Envision. <br />
+            Tap to speak. Click to Snap
         </div>
-        <div id="text-status" style="">Tap to speak. Click to Snap</div>
-        <form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data" target="icontent">
+        <!--<div id="text-status" style=""></div>-->
+        <!--<form action="http://visualqa.csail.mit.edu/cgi-bin/image_vqa.py" id="form" method="post" enctype="multipart/form-data" target="icontent">
             <input id="url" type="hidden" name="url" value="http://40.71.33.178/static/1484393884.jpg" />
             <input type="hidden" name="random" value="56476846" />
             <input id="question" type="hidden" name="question" value="what food?" />
             <input type="submit" value="Submit" onclick="makeRequest();" />
-        </form>
+        </form>-->
         
         <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-progress-circular>
-        <iframe name="icontent" id="icontent"></iframe>
+        <!--<iframe name="icontent" id="icontent"></iframe>-->
     </ons-page>
 
     <script>
