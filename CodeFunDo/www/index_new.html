@@ -56,9 +56,6 @@
                         speak(data['answer']);
                     })
                     .fail(function (a, b, c) {
-                        alert("error");
-                        alert(a);
-                        alert(b);
                         alert(c);
                     });
                 }
@@ -130,7 +127,7 @@
                                 if (final.length > 5) {
                                     setTimeout(function () {
                                         speak("The image also contains the text: " + final);
-                                    }, 4000);
+                                    }, 4500);
                                     
                                 }
                                 $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
@@ -145,17 +142,28 @@
                             alert("error");
                         });
 
-                        
+                        //$.post(
+                        //    "http://13.82.96.191:8080/depth",{
+                        //        'data': "http://40.71.33.178/" + ul
+                        //    })
+                        //.done(function (data) {
+                        //    console.log(data);
+                        //})
+                        //.fail(function (a, b, c) {
+                        //    alert(c);
+                        //});
+                        // TODO reduce fail alerts
                 });
 
                 
+
             });
         }
     </script>
 </head>
 
 <body>
-    <ons-page>
+    <ons-page id="mainpage1">
         <ons-toolbar>
             <div class="left">
                 <img style="height:100%;" src="images/logo.png" />
@@ -217,12 +225,15 @@
                 }
             });
 
+            //document.getElementById("mainpage1").addEventListener('click', function (event) {
+            //    speak("You are not taping in the right place. Please tap in the center.");
+            //});
             document.getElementById("main-button").addEventListener("click", function (event) {
+                event.preventDefault();
                 speak('Opening Camera!')
                 CameraPreview.startCamera({ camera: "back", tapPhoto: true, previewDrag: false, toBack: false });
-
             });
-
+            
         })();
 
     </script>
