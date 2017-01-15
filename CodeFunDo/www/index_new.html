@@ -87,9 +87,20 @@
                             data: "{'url':'" + "http://40.71.33.178/" + ul + "'}",
                         })
                         .done(function (data) {
-                            speak(data['description']['captions'][0]['text']);
-                            $('#main-status').html(data['description']['captions'][0]['text']);
-
+                            console.log(JSON.stringify(data));
+                            stext = data['description']['captions'][0]['text'];
+                            stext = stext + ". The image also represents: "
+                            var total = 0;
+                            $.each(data['description']['tags'], function (i, tag) {
+                                if (stext.indexOf(tag) < 0) {
+                                    stext = stext + tag + ", ";
+                                    total = total + 1;
+                                    if (total==3) return false;
+                                }
+                            });
+                            speak(stext);
+                            //$('#main-status').html(data['description']['captions'][0]['text']);
+                            $('#main-status').html(stext);
 
                             $.ajax({
                                 url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
@@ -119,7 +130,7 @@
                                 if (final.length > 5) {
                                     setTimeout(function () {
                                         speak("The image also contains the text: " + final);
-                                    }, 1000);
+                                    }, 4000);
                                     
                                 }
                                 $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
