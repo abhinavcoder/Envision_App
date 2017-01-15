@@ -14,7 +14,7 @@
         var recognition=null;
         var picture;
         var params = {
-            "visualFeatures": "Description",
+            "visualFeatures": "Description,Tags",
             "language": "en",
         };
 
@@ -65,11 +65,12 @@
             }
             CameraPreview.setOnPictureTakenHandler(function (result) {
                 CameraPreview.stopCamera();
+                speak("Processing. Please Wait");
                 document.getElementById('loading-buzy').style.display = 'block';
                 $.post('http://40.71.33.178/save',{data:result},
                     function (data) {
                         r = JSON.parse(data);
-                        data = r['local'];
+                        ul = r['local'];
                         img_id = r['img_id']
                         console.log(JSON.stringify(r));
                         $('#loading-buzy').css('display', 'none');
@@ -83,35 +84,57 @@
                             },
                             type: "POST",
                             // Request body
-                            data: "{'url':'" + "http://40.71.33.178/" + data + "'}",
+                            data: "{'url':'" + "http://40.71.33.178/" + ul + "'}",
                         })
                         .done(function (data) {
                             speak(data['description']['captions'][0]['text']);
                             $('#main-status').html(data['description']['captions'][0]['text']);
+
+
+                            $.ajax({
+                                url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
+                                beforeSend: function (xhrObj) {
+                                    // Request headers
+                                    xhrObj.setRequestHeader("Content-Type", "application/json");
+                                    xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "01e50a2eb00342d8bbdf1dc1744631a5");
+                                },
+                                type: "POST",
+                                // Request body
+                                data: "{'url':'" + "http://40.71.33.178/" + ul + "'}",
+                            })
+                            .done(function (data) {
+                                console.log("text reading complete");
+                                console.log(JSON.stringify(data['regions']));
+                                var final = "";
+                                $.each(data['regions'], function (i, region) {
+                                    $.each(region['lines'], function (j, line) {
+                                        var temp = "";
+                                        $.each(line['words'], function (k, f) {
+                                            temp = temp + f['text'] + " ";
+                                        });
+                                        if (final.length < temp.length) final = temp;
+                                    });
+                                    
+                                });
+                                if (final.length > 5) {
+                                    setTimeout(function () {
+                                        speak("The image also contains the text: " + final);
+                                    }, 1000);
+                                    
+                                }
+                                $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
+                            })
+                            .fail(function () {
+                                alert("error");
+                            });
+
+
                         })
                         .fail(function () {
                             alert("error");
                         });
 
-                        //$.ajax({
-                        //    url: "https://api.projectoxford.ai/vision/v1.0/ocr?",
-                        //    beforeSend: function (xhrObj) {
-                        //        // Request headers
-                        //        xhrObj.setRequestHeader("Content-Type", "application/json");
-                        //        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "01e50a2eb00342d8bbdf1dc1744631a5");
-                        //    },
-                        //    type: "POST",
-                        //    // Request body
-                        //    data: "{'url':'" + "http://40.71.33.178/" + data + "'}",
-                        //})
-                        //.done(function (data) {
-                        //    console.log("text reading complete");
-                        //    speak(data['regions'][0]['lines'][0]['words'][0]['text']);
-                        //    $('#text-status').html(data['regions'][0]['lines'][0]['words'][0]['text']);
-                        //})
-                        //.fail(function () {
-                        //    alert("error");
-                        //});
+                        
                 });
 
                 
