@@ -14,7 +14,7 @@
         var recognition=null;
         var picture;
         var params = {
-            "visualFeatures": "Description,Tags",
+            "visualFeatures": "Description",
             "language": "en",
         };
 
@@ -163,12 +163,14 @@
             <div class="center">
                 Envision
             </div>
-            <!--<div class="right">
+            <div class="right">
               <ons-toolbar-button>
-                <ons-icon icon="md-menu"></ons-icon>
+                <!--<ons-icon icon="md-menu"></ons-icon>-->
+                <ons-progress-circular value="0" style="stroke: azure; display:none; margin-top:5px" id="loading-buzy" indeterminate></ons-progress-circular>
               </ons-toolbar-button>
-            </div>-->
+            </div>
         </ons-toolbar>
+        
         <ons-button id="main-button" style="font-size:60px ">
             <i class="fa fa-camera" aria-hidden="true"></i>
             <span style="font-size:80px">|</span>
@@ -187,7 +189,6 @@
             <input type="submit" value="Submit" onclick="makeRequest();" />
         </form>-->
         
-        <ons-progress-circular id="loading-buzy" indeterminate style="display:none;"></ons-progress-circular>
         <!--<iframe name="icontent" id="icontent"></iframe>-->
     </ons-page>
 
