@@ -1,0 +1,32 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-file": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "org.apache.cordova.speech.speechrecognition": {
+            "MICROPHONE_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "cordova-plugin-camera-preview": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        }
+    },
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "io.cordova.myapp5fdd2a"
+        }
+    }
+}
