@@ -9,3 +9,6 @@ Envision is a multi-purpose assistant app to help visually impaired in their dai
 - Apache Cordova
 - Microsoft Cognitive Services
 - [Multimodal Compact Bilinear Pooling for VQA](https://github.com/akirafukui/vqa-mcb)
+
+## Screenshot
+![alt text](Screenshot1.png "App Screenshot")

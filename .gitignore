@@ -249,3 +249,4 @@ ModelManifest.xml
 /CodeFunDo/plugins/cordova-plugin-tts
 WebServices/*.png
 WebServices/*.pyc
+/Thumbs.db
